@@ -17,3 +17,16 @@ toolbar = DebugToolbarExtension(app)
 
 # connect_db(app)
 # db.create_all()
+
+@app.route('/')
+def root():
+    """Homepage redirects to list of users."""
+
+    return redirect("/users")
+
+app.route('/users')
+def users_index():
+    """Show a page with info on all users"""
+
+    # users = User.query.order_by(User.last_name, User.first_name).all()
+    return render_template('users/index.html')
