@@ -14,7 +14,12 @@
   </head>
   <body>
     <!-- Your page content -->
-    {% block content %}{% endblock %} {% block scripts %}
+    <div id="content">{% block content %}{% endblock %}</div>
+    <div id="footer">
+      <p>Copyright &copy; <span id="current-year">2021</span> Rick Goshen</p>
+    </div>
+
+    {% block scripts %}
     <!-- Optional JavaScript -->
     {{ bootstrap.load_js() }} {% endblock %}
   </body>
