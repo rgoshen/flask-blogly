@@ -23,4 +23,4 @@ class User(db.Model):
                    primary_key=True, autoincrement=True)
     first_name = db.Column(db.String(50), nullable=False)
     last_name = db.Column(db.String(50), nullable=False)
-    image_url = db.Column(db.Text, nullabe=False, default=DEFAULT_IMG_URL)
+    image_url = db.Column(db.Text, nullable=False, default=DEFAULT_IMG_URL)
