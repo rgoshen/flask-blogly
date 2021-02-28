@@ -14,9 +14,14 @@
   </head>
   <body>
     <!-- Your page content -->
-    <div id="content">{% block content %}{% endblock %}</div>
+    <div id="content">
+      <div class="container">{% block content %}{% endblock %}</div>
+    </div>
+
     <div id="footer">
-      <p>Copyright &copy; <span id="current-year">2021</span> Rick Goshen</p>
+      <div class="container">
+        <p>Copyright &copy; <span id="current-year">2021</span> Rick Goshen</p>
+      </div>
     </div>
 
     {% block scripts %}
