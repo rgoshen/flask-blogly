@@ -29,4 +29,4 @@ def users_index():
     """Render a page with a list of all users"""
 
     users = User.query.order_by(User.last_name, User.first_name).all()
-    return render_template('users/index.html')
+    return render_template('users/index.html', users=users)
