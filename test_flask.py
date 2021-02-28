@@ -1,10 +1,10 @@
 from unittest import TestCase
 
 from app import app
-from models import db, Pet
+from models import db, User
 
 # Use test database and don't clutter tests with SQL
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///sqla_intro_test'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///blogly_test'
 app.config['SQLALCHEMY_ECHO'] = False
 
 # Make Flask errors be real errors, rather than HTML pages with error info
@@ -17,46 +17,46 @@ db.drop_all()
 db.create_all()
 
 
-class PetViewsTestCase(TestCase):
-    """Tests for views for Pets."""
+class UserViewsTestCase(TestCase):
+    """Tests for views for Users."""
 
     def setUp(self):
-        """Add sample pet."""
+        """Add sample user."""
 
-        Pet.query.delete()
+        User.query.delete()
 
-        pet = Pet(name="TestPet", species="dog", hunger=10)
-        db.session.add(pet)
+        user = User(first_name="John", last_name="Doe")
+        db.session.add(user)
         db.session.commit()
 
-        self.pet_id = pet.id
+        self.user_id = user.id
 
     def tearDown(self):
         """Clean up any fouled transaction."""
 
         db.session.rollback()
 
-    def test_list_pets(self):
+    def test_list_users(self):
         with app.test_client() as client:
-            resp = client.get("/")
+            resp = client.get("/users")
             html = resp.get_data(as_text=True)
 
             self.assertEqual(resp.status_code, 200)
-            self.assertIn('TestPet', html)
+            self.assertIn('John', html)
 
-    def test_show_pet(self):
+    def test_show_user(self):
         with app.test_client() as client:
-            resp = client.get(f"/{self.pet_id}")
+            resp = client.get(f"/{self.user_id}")
             html = resp.get_data(as_text=True)
 
             self.assertEqual(resp.status_code, 200)
-            self.assertIn('<h1>TestPet</h1>', html)
+            self.assertIn('<h1>John Doe</h1>', html)
 
-    def test_add_pet(self):
+    def test_add_user(self):
         with app.test_client() as client:
-            d = {"name": "TestPet2", "species": "cat", "hunger": 20}
+            d = {"first_name": "Jane", "last_name": "Doe"}
             resp = client.post("/", data=d, follow_redirects=True)
             html = resp.get_data(as_text=True)
 
             self.assertEqual(resp.status_code, 200)
-            self.assertIn("<h1>TestPet2</h1>", html)
+            self.assertIn("<h1>Jane Doe</h1>", html)
