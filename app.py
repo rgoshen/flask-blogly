@@ -30,3 +30,23 @@ def users_index():
 
     users = User.query.order_by(User.last_name, User.first_name).all()
     return render_template('users/index.html', users=users)
+
+@app.route('/users/new', methods=["GET"])
+def users_new_form():
+    """Show a form to create a new user"""
+
+    return render_template('users/new.html')
+
+@app.route("/users/new", methods=["POST"])
+def users_new():
+    """Handle form submission for creating a new user"""
+
+    new_user = User(
+        first_name=request.form['first_name'],
+        last_name=request.form['last_name'],
+        image_url=request.form['image_url'] or None)
+
+    db.session.add(new_user)
+    db.session.commit()
+
+    return redirect("/users")
