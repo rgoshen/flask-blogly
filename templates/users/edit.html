@@ -1,6 +1,6 @@
-{% extends "base.html" %} {% block title %}Edit User{% endblock %} {% block
-content %}
-<h1>Edit User</h1>
+{% extends "base.html" %} {% block title %}Edit {{ user.full_name }}{% endblock
+%} {% block content %}
+<h1>Edit {{ user.full_name }}</h1>
 <form method="POST">
   <div class="form-group row">
     <label for="first_name" class="col-sm-2 col-form-label">First Name</label>
