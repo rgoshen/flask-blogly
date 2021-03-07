@@ -3,6 +3,8 @@
 from flask_sqlalchemy import SQLAlchemy
 import datetime
 
+from sqlalchemy.orm import backref
+
 db = SQLAlchemy()
 
 DEFAULT_IMG_URL = "https://www.freeiconspng.com/uploads/icon-user-blue-symbol-people-person-generic--public-domain--21.png"
@@ -25,6 +27,8 @@ class User(db.Model):
     first_name = db.Column(db.String(50), nullable=False)
     last_name = db.Column(db.String(50), nullable=False)
     image_url = db.Column(db.Text, nullable=False, default=DEFAULT_IMG_URL)
+
+    posts = db.relationship("Post", backref="user")
 
     @property
     def full_name(self):

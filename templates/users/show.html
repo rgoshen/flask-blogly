@@ -30,6 +30,17 @@ block content %}
         Delete
       </button>
     </form>
+
+    <h2 class="mt-4">Posts</h2>
+
+    <ul>
+      {% for post in user.posts %}
+      <li>
+        <a href="/posts/{{ post.id}}">{{ post.title }}</a>
+        <small>{{ post.created_at }}</small>
+      </li>
+      {% endfor %}
+    </ul>
   </div>
 </div>
 
