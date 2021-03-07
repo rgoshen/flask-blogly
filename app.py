@@ -121,3 +121,19 @@ def new_post_form(user_id):
     user = User.query.get_or_404(user_id)
 
     return render_template('posts/new.html', user=user)
+
+
+@app.route('/users/<int:user_id>/posts/new', methods=["POST"])
+def posts_new(user_id):
+    """Handle form submission for creating a new post for a specific user"""
+
+    user = User.query.get_or_404(user_id)
+    new_post = Post(title=request.form['title'],
+                    content=request.form['content'],
+                    user=user)
+
+    db.session.add(new_post)
+    db.session.commit()
+    flash(f"Post '{new_post.title}' added.")
+
+    return redirect(f"/users/{user_id}")
