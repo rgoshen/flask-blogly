@@ -1,7 +1,8 @@
 """Blogly application."""
 
+from flask.helpers import flash
 from flask_bootstrap import Bootstrap
-from flask import Flask, request, redirect, render_template
+from flask import Flask, request, redirect, render_template, flash
 from flask_debugtoolbar import DebugToolbarExtension
 from models import Post, db, connect_db, User, Post
 
@@ -50,6 +51,8 @@ def users_new():
         last_name=request.form['last_name'],
         image_url=request.form['image_url'] or None)
 
+    flash(f"User {new_user.full_name} added.")
+
     db.session.add(new_user)
     db.session.commit()
 
@@ -84,6 +87,8 @@ def users_update(user_id):
     db.session.add(user)
     db.session.commit()
 
+    flash(f"User {user.full_name} edited.")
+
     return redirect("/users")
 
 
@@ -94,5 +99,7 @@ def users_destroy(user_id):
     user = User.query.get_or_404(user_id)
     db.session.delete(user)
     db.session.commit()
+
+    flash(f"User {user.full_name} deleted.")
 
     return redirect("/users")
