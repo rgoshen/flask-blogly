@@ -19,12 +19,19 @@ toolbar = DebugToolbarExtension(app)
 connect_db(app)
 db.create_all()
 
+####################################################################
+#  main routes
+
 
 @app.route('/')
 def root():
     """Homepage redirects to list of users."""
 
     return redirect("/users")
+
+
+####################################################################
+#  user routes
 
 
 @app.route('/users')
@@ -103,3 +110,14 @@ def users_destroy(user_id):
     flash(f"User {user.full_name} deleted.")
 
     return redirect("/users")
+
+
+####################################################################
+#  post routes
+@app.route('/users/<int:user_id>/posts/new')
+def new_post_form(user_id):
+    """Show a form to create a new post for a specific user"""
+
+    user = User.query.get_or_404(user_id)
+
+    return render_template('posts/new.html', user=user)
