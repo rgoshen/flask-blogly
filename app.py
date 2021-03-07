@@ -100,7 +100,7 @@ def users_update(user_id):
 
 
 @app.route('/users/<int:user_id>/delete', methods=["POST"])
-def users_destroy(user_id):
+def delete_user(user_id):
     """Handle form submission for deleting an existing user"""
 
     user = User.query.get_or_404(user_id)
@@ -166,5 +166,18 @@ def posts_update(post_id):
     db.session.add(post)
     db.session.commit()
     flash(f"Post '{post.title}' edited.")
+
+    return redirect(f"/users/{post.user_id}")
+
+
+@app.route('/posts/<int:post_id>/delete', methods=["POST"])
+def delete_post(post_id):
+    """Handle form submission for deleting an existing post"""
+
+    post = Post.query.get_or_404(post_id)
+    db.session.delete(post)
+    db.session.commit()
+
+    flash(f"Post {post.title} deleted.")
 
     return redirect(f"/users/{post.user_id}")
