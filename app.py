@@ -137,3 +137,11 @@ def posts_new(user_id):
     flash(f"Post '{new_post.title}' added.")
 
     return redirect(f"/users/{user_id}")
+
+
+@app.route('/posts/<int:post_id>')
+def posts_show(post_id):
+    """Show a page with info on a specific post"""
+
+    post = Post.query.get_or_404(post_id)
+    return render_template('posts/show.html', post=post)
