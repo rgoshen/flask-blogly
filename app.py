@@ -31,6 +31,13 @@ def root():
     return render_template("posts/home_page.html", posts=posts)
 
 
+@app.errorhandler(404)
+def page_not_found(e):
+    """Show 404 NOT FOUND page."""
+
+    return render_template('404_page.html'), 404
+
+
 ####################################################################
 #  user routes
 
