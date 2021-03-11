@@ -4,7 +4,7 @@ from flask.helpers import flash
 from flask_bootstrap import Bootstrap
 from flask import Flask, request, redirect, render_template, flash
 from flask_debugtoolbar import DebugToolbarExtension
-from models import Post, db, connect_db, User, Post
+from models import Post, db, connect_db, User, Post, Tag
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgres:///blogly"
@@ -122,6 +122,8 @@ def delete_user(user_id):
 
 ####################################################################
 #  post routes
+
+
 @app.route('/users/<int:user_id>/posts/new')
 def new_post_form(user_id):
     """Show a form to create a new post for a specific user"""
@@ -189,3 +191,14 @@ def delete_post(post_id):
     flash(f"Post {post.title} deleted.")
 
     return redirect(f"/users/{post.user_id}")
+
+####################################################################
+#  tag routes
+
+
+@app.route('/tags')
+def tags_index():
+    """Renders a page to list all available current tags."""
+
+    tags = Tag.query.all()
+    return render_template('tags/index.html', tags=tags)
